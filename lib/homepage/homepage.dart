@@ -20,7 +20,12 @@ class _frontpageState extends State<frontpage> {
   double temp2 = 0.0;
   String weathercondition2 = '';
   List<String> templist = [];
+  List<String> weatherlist = [];
+  bool _isLoading = false;
   Getweather1() async {
+    setState(() {
+      _isLoading = true;
+    });
     var api =
         'https://api.openweathermap.org/data/2.5/weather?lat=31.5204&lon=74.329376&exclude=hourly,daily&appid=c1975188522ee8a2a6d9fb75013d0958';
     var api1 =
@@ -47,6 +52,8 @@ class _frontpageState extends State<frontpage> {
       temp2 = x as double;
       weathercondition2 = list2['weather'][0]['main'];
       templist = [temp.toString(), temp1.toString(), temp2.toString()];
+      weatherlist = [weathercondition, weathercondition1, weathercondition2];
+      _isLoading = false;
     });
   }
 
@@ -76,6 +83,7 @@ class _frontpageState extends State<frontpage> {
 
   chalo() {
     print(templist);
+    print(weatherlist);
   }
 
   @override
@@ -102,37 +110,37 @@ class _frontpageState extends State<frontpage> {
           )
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const SizedBox(height: 16),
-          Center(
-            child: const Text(
-              'City Weather',
-              style: TextStyle(
-                fontFamily: 'GabrielaStencil',
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.w300,
-              ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const SizedBox(height: 16),
+                Center(
+                  child: const Text(
+                    'City Weather',
+                    style: TextStyle(
+                      fontFamily: 'GabrielaStencil',
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Extendpage(
+                  foregroundImages: foregroundImages,
+                  backgroundImages: backgroundImages,
+                  texts: texts,
+                  templist: templist,
+                  weatherlist: weatherlist,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 24),
-          extendpage(
-            foregroundImages: foregroundImages,
-            backgroundImages: backgroundImages,
-            texts: texts,
-            templist: templist,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                chalo();
-              },
-              child: Text('pressed'))
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),

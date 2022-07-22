@@ -2,25 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-class extendpage extends StatefulWidget {
-  const extendpage({
+class Extendpage extends StatefulWidget {
+  const Extendpage({
     Key? key,
     required this.foregroundImages,
     required this.backgroundImages,
     required this.texts,
     required this.templist,
+    required this.weatherlist,
   }) : super(key: key);
   final List<String> foregroundImages;
   final List<String> backgroundImages;
   final List<String> texts;
   final List<String> templist;
+  final List<String> weatherlist;
   @override
-  State<extendpage> createState() => _extendpageState();
+  State<Extendpage> createState() => _ExtendpageState();
 }
 
-class _extendpageState extends State<extendpage> {
+class _ExtendpageState extends State<Extendpage> {
   double? _accelerometerXAxis;
   late final StreamSubscription<dynamic> _streamSubscription;
 
@@ -28,13 +31,19 @@ class _extendpageState extends State<extendpage> {
   late final List<String> _backgroundImages;
   late final List<String> _texts;
   late final List<String> _templist;
+  late final List<String> _weatherlist;
   @override
   void initState() {
     super.initState();
+    blablaFnc();
+  }
+
+  blablaFnc() {
     _foregroundImages = widget.foregroundImages;
     _backgroundImages = widget.backgroundImages;
     _texts = widget.texts;
     _templist = widget.templist;
+    _weatherlist = widget.weatherlist;
     _streamSubscription = accelerometerEvents.listen(
       (AccelerometerEvent event) {
         setState(() {
@@ -42,10 +51,6 @@ class _extendpageState extends State<extendpage> {
         });
       },
     );
-  }
-
-  chalbe() {
-    print(_templist);
   }
 
   @override
@@ -100,50 +105,42 @@ class _extendpageState extends State<extendpage> {
                           children: [
                             Icon(Icons.location_on,
                                 color: Colors.white, size: 30),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Text(
                               _texts[index],
                               style: const TextStyle(
                                 fontFamily: 'GabrielaStencil',
                                 color: Colors.white,
-                                fontSize: 40,
+                                fontSize: 30,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: 1,
                               ),
                             ),
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _templist[index],
+                              style: GoogleFonts.bebasNeue(
+                                  color: Colors.white,
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2),
+                            ),
+                          ],
+                        ),
                         Text(
-                          'h',
+                          _weatherlist[index],
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0, primary: Colors.white30),
-                          onPressed: () {
-                            chalbe();
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                              vertical: 12.0,
-                            ),
-                            child: Text(
-                              'EXPLORE',
-                              style: TextStyle(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300,
-                                letterSpacing: 1,
-                              ),
-                            ),
                           ),
                         ),
                       ],
