@@ -59,7 +59,7 @@ class _ExtendpageState extends State<Extendpage> {
       options: CarouselOptions(
         height: 520.0,
         viewportFraction: 0.80,
-        enableInfiniteScroll: false,
+        enableInfiniteScroll: true,
       ),
       items: _foregroundImages.asMap().entries.map((entry) {
         int index = entry.key;
@@ -123,13 +123,35 @@ class _ExtendpageState extends State<Extendpage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              _templist[index],
-                              style: GoogleFonts.bebasNeue(
-                                  color: Colors.white,
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2),
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 100,
+                                  color: Colors.transparent,
+                                  child: Center(
+                                    child: Text(
+                                      _templist[index],
+                                      style: GoogleFonts.bebasNeue(
+                                          color: Colors.white,
+                                          fontSize: 50,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 2),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 15,
+                                  child: Text(
+                                    '0',
+                                    style: GoogleFonts.bebasNeue(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 2),
+                                  ),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -138,6 +160,8 @@ class _ExtendpageState extends State<Extendpage> {
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             color: Colors.white,
+                            backgroundColor:
+                                const Color.fromARGB(255, 90, 86, 90),
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1,

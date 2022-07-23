@@ -22,6 +22,7 @@ class _frontpageState extends State<frontpage> {
   List<String> templist = [];
   List<String> weatherlist = [];
   bool _isLoading = false;
+  var a, b, c = 0;
   Getweather1() async {
     setState(() {
       _isLoading = true;
@@ -40,18 +41,21 @@ class _frontpageState extends State<frontpage> {
     dynamic list2 = jsonDecode(responce2.body);
     setState(() {
       temp = list['main']['temp'] - 273.15;
-      x = temp.toInt();
-      temp = x as double;
+      //x = temp.toInt();
+      //temp = x as double;
+      a = temp.round();
       weathercondition = list['weather'][0]['main'];
       temp1 = list1['main']['temp'] - 273.15;
-      x = temp1.toInt();
-      temp1 = x as double;
+      //x = temp1.toInt();
+      //temp1 = x as double;
+      b = temp1.round();
       weathercondition1 = list1['weather'][0]['main'];
       temp2 = list2['main']['temp'] - 273.15;
-      x = temp2.toInt();
-      temp2 = x as double;
+      //x = temp2.toInt();
+      //temp2 = x as double;
+      c = temp2.round();
       weathercondition2 = list2['weather'][0]['main'];
-      templist = [temp.toString(), temp1.toString(), temp2.toString()];
+      templist = [a.toString(), b.toString(), c.toString()];
       weatherlist = [weathercondition, weathercondition1, weathercondition2];
       _isLoading = false;
     });
